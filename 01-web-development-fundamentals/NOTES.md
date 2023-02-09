@@ -152,3 +152,27 @@ function checkNumberThree() {
 ### Loops
 
 `while` and `for` loops are used to loop over some code conditionally.
+
+### Arrays
+
+Array is a collection of data, enclosed within brackets.
+
+# Setting up your computer 1
+
+## Getting to know your computer
+
+### Command line
+
+Commands like `mkdir,cp,mv,touch,rm,ls,pwd` can be used to perform navigation/operation tasks on the command line.
+
+### Wildcards
+
+'*' and '?' are used as wildcards.
+
+```
+ls *.txt // lists all files with extension .txt
+
+ls ????.txt // lists files with name of length 4 characters, ending in txt
+
+ls my????.txt // my-notes.txt
+```
