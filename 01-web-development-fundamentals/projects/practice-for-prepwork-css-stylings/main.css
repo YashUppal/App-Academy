@@ -1,0 +1,67 @@
+@import url('https://fonts.googleapis.com/css2?family=Manrope&display=swap');
+
+:root {
+    --padding-large: 16px;
+    --padding-medium: 12px;
+    --padding-small: 8px;
+
+    --margin-large: 16px;
+    --margin-medium: 12px;
+    --margin-small: 8px;
+
+    --text-color: rgb(103, 74, 3);
+    --text-color-darker: rgb(100, 72, 2);
+    --text-background-light:cornsilk;
+
+    --font-family: 'Manrope',sans-serif;
+    --font-size-large: 36px;
+    --font-size-medium: 24px;
+    --font-size-small: 16px;
+}
+
+body {
+    background-color: var(--text-background-light);
+}
+
+h1 {
+    font-size: var(--font-size-large);
+    font-family: var(--font-family);
+    padding: var(--padding-small);
+    margin: var(--margin-small);
+    font-weight: normal;
+    text-decoration: underline;
+    color: var(--text-color-darker);
+    background-color: var(--text-background-light);
+
+}
+
+h2 {
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+    padding: var(--padding-medium);
+    margin: var(--margin-medium);
+    font-weight: normal;
+    color: var(--text-color);
+    background-color: transparent;
+}
+
+p {
+    font-family: var(--font-family);
+    font-size: var(--font-size-small);
+    padding: var(--padding-small) var(--padding-large);
+    margin: var(--margin-small) var(--margin-large);
+    color: var(--text-color);
+    background-color: transparent;
+}
+
+.logo {
+    background-size: cover;
+    background-image: url("https://appacademy.github.io/styleguide/assets/logo/logo-emblem-black-1000.png");
+    background-color: transparent;
+    height: 80px;
+    width: 80px;
+    /* center the logo */
+    margin-top: var(--margin-large);
+    margin-left:auto;
+    margin-right:auto;
+}
