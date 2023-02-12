@@ -20,6 +20,7 @@
   top:0px;
   left:109px;
   transition: 0.25s;
+  cursor:pointer;
 }
 
 .wgs__dirt-pile {
@@ -32,6 +33,26 @@
 
 .wgs__mole-head--hidden {
   margin-top:482px;
+}
+
+.wgs__mole-head--whacked {
+  animation-name: shake;
+  animation-duration: 0.25s;
+}
+
+
+@keyframes shake {
+  0% { transform: rotate(0deg);}
+  10% { transform: rotate(10deg); }
+  20% { transform: rotate(-15deg);}
+  30% { transform: rotate(10deg);}
+  40% { transform: rotate(-20deg);}
+  50% { transform: rotate(8deg);}
+  60% { transform: rotate(-12deg);}
+  70% { transform: rotate(15deg);}
+  80% { transform: rotate(-5deg);}
+  90% { transform: rotate(20deg);}
+  100% { transform: rotate(-9deg);}
 }
 
 
