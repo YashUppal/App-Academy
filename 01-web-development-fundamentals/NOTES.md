@@ -156,7 +156,7 @@ function checkNumberThree() {
 ### Arrays
 
 Array is a collection of data, enclosed within brackets.
-
+___
 # Setting up your computer 1
 
 ## Getting to know your computer
@@ -176,3 +176,84 @@ ls ????.txt // lists files with name of length 4 characters, ending in txt
 
 ls my????.txt // my-notes.txt
 ```
+
+## Intro to Source Control
+
+Source Control is the process of managing the code of your project.
+
+Git is one of the softwares for source control.
+___
+
+# HTML and CSS Fundamentals
+
+## Problem Solving
+
+Break down problems into smaller chunks and work on them piece by piece.
+
+Use Polya's framework to navigate through challenges. When a problem requires skills beyond your current training, that's a good opportunity to learn a concept/framework/library. Refer to documentation and make sure you understand the code.
+
+To debug problems, isolate the code and test it multiple times. Also, experiment with the code.
+
+Once the problem is solved, look back and improve the solution. Make performance improvements, clean up the code, add fallbacks and error handling, try to break the code again to the best of your abilities to reveal gaps.
+
+## HTML Basics
+
+HTML -> Hypertext Markup language, consists of tags, and attributes.
+
+Attributes are used to specify a property on the HTML tag.
+
+```
+<img src="path/to/image"> <- HTML element
+```
+
+HTML elements refer to the tags, attributes and the content between the tags.
+
+
+## CSS basics
+
+### Descendant Selector
+
+```
+.parent .child {
+    /* some styling */
+}
+This will target an element with class .child that is a descendant of an element with class .parent
+
+ Note - .parent.child is different than .parent .child. The space makes it a descendant selector, whereas the no-space makes CSS target an element with class .parent AND .child
+```
+
+### Direct Child Selector
+
+```
+.parent > .direct-child {
+    /* some styling */
+}
+This will target and element with class .direct-child that is the direct child of the element with class .parent
+```
+
+### Sibling/Adjacent selector
+
+```
+h1 + h2 {
+    /* some styling */
+}
+
+This will target the h2 tag which is a directly adjacent to an h1 tag, like below
+
+<h1>Reference</h1>
+<h2>Targeted</h2>
+<h2>Not Targeted</h2>
+```
+## Intermediate CSS
+
+Inline Elements -> `a`,`span`,`img`. These elements don't respect the `height` and `width` properties. They lay on the same line, one after the other, the `margin` and `padding` values still apply, but they don't push other inline elements.
+
+Block Elements -> `div`,`p`. These elements respect the `height` and `width` properties. They lay on the page on a new line. The `margin` and `padding` values apply and they push the other elements.
+
+Inline-Block Elements -> Best of `inline` and `block` elements combined.
+
+Box Sizing = `border-box` includes the `border` and `padding` within the box height and width.
+
+**Top border, bottom border, top padding, bottom padding are included in the box-height.**
+
+**Left border, right border, left padding, right padding are included in the box-width.**
