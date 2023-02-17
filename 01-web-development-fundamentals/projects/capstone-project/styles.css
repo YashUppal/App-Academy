@@ -1,0 +1,186 @@
+@import url('https://fonts.googleapis.com/css2?family=Erica+One&display=swap');
+
+* {
+    font-family:'Erica One', cursive;
+    font-weight:100;
+}
+
+body {
+    margin:0;
+    padding:0;
+    height:100vh;
+}
+
+h1 {
+    padding:0;
+    margin:0;
+}
+
+:root {
+    --color-gray: #9a9a9a;
+    --color-black: #000000;
+    --color-yellow:#fdd53f;
+    --color-white:#fefefe;
+
+    --font-large: 3.5em;
+    --font-larger: 4em;
+    --font-medium: 2.5em;
+
+}
+
+.navbar__link.active {
+    background: var(--color-yellow);
+    color:var(--color-black);
+}
+
+.navbar {
+    background: var(--color-black);
+    display:flex;
+}
+
+.navbar__logo {
+    width:350px;
+}
+
+.navbar__links-div {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items:center;
+}
+
+.navbar__link {
+    font-size: var(--font-large);
+    color:var(--color-yellow);
+    text-decoration:none;
+    height:100%;
+    display: flex;
+    align-items: center;
+}
+
+.navbar__link:hover {
+    background: var(--color-gray);
+
+}
+
+.body-and-image {
+    display:flex;
+    background:var(--color-yellow);
+    height:100%;
+}
+
+.header {
+    display:flex;
+}
+
+.header__heading {
+    font-size:var(--font-larger);
+}
+
+.header__subtext {
+    font-size:var(--font-medium);
+}
+
+.contact-page{
+    justify-content:center;
+}
+
+.about-list {
+    font-size:var(--font-large)
+}
+
+.footer {
+    background:black;
+    color:var(--color-gray);
+}
+.footer > p {
+    margin:0;
+}
+
+.gallery-image-container {
+    display: flex;
+    flex-wrap: wrap;
+    width: auto;
+    justify-content: space-around;
+}
+
+.gallery-image {
+    width:300px;
+    height:200px;
+}
+
+.fieldset {
+    display:flex;
+    flex-direction:column;
+    justify-content:space-around;
+    padding:25px;
+    height:550px;
+}
+
+input {
+    background: bottom;
+    height:60px;
+}
+
+input[type="checkbox"] {
+    background:bottom;
+    width:30px;
+    height:30px;
+    accent-color: var(--color-yellow);
+}
+
+.submit-button {
+    width:100%;
+    height:60px;
+    background:bottom;
+}
+.flex-row {
+    display:flex;
+    justify-content:space-around;
+    align-items:center;
+}
+@media only screen and (max-width: 1200px) {
+    .navbar {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .pose-image {
+        height:80%;
+    }
+
+    .section:nth-child(4) {
+        width:140%;
+    }
+  }
+
+  @media only screen and (max-width:900px) {
+
+    .body-and-image {
+        background-image: url("assets/johnny-pose.png");
+        background-repeat:no-repeat;
+        text-align:justified;
+    }
+
+    .header-and-sections {
+        backdrop-filter: brightness(0.3) blur(17px);
+        color: #fdd53f;
+        width:100%;
+    }
+
+    .pose-image > img {
+        filter:blur;
+    }
+
+    .pose-image {
+        display:none;
+    }
+    .section:nth-child(4) {
+        width:auto;
+    }
+
+    .gallery-image {
+        width: 150px;
+    height: 100px;
+    }
+  }
