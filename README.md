@@ -2,7 +2,7 @@
 *contains my notes, solutions, projects, etc. corresponding to my work through the App Academy Open curriculum*
 
 ## Progress Checklist
-- [ ] Web Development Fundamentals
+- [x] Web Development Fundamentals
 - [ ] JavaScript Fundamentals
 - [ ] Practice Week
 - [ ] Intermediate JavaScript
