@@ -3,7 +3,7 @@
 
 ## Progress Checklist
 - [x] Web Development Fundamentals
-- [ ] JavaScript Fundamentals
+- [x] JavaScript Fundamentals
 - [ ] Practice Week
 - [ ] Intermediate JavaScript
 - [ ] TDD and OOP
