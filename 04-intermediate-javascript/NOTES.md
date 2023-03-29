@@ -261,3 +261,304 @@ let colors = ["indigo","violet","purple"];
 colorPicker(..colors); // "The colors are indigo, violet and purple"
 
 ```
+## Destructuring
+
+Destructuring let's us simplify our code by de-structuring a data structure like array or object, and assigning values to variables
+
+```javascript
+
+let animals = ["cat","dog","fish","rat"];
+
+let [animal1,animal2] = animals;
+
+console.log(animal1); // cat
+console.log(animal2); // dog
+
+
+let obj = {
+  "name" : "John Doe",
+  "jobs" : {
+    "first":"Front End Engineer",
+    "second":"Full Stack Engineer",
+    "third":"Web Architect"
+  }
+}
+
+let { name, jobs:{ first, second }} = obj;
+
+console.log(name);
+console.log(first);
+console.log(second);
+
+// Output
+// John Doe
+// Front End Engineer
+// Full Stack Engineer
+```
+
+### Destructuring and Rest
+
+```javascript
+
+let foods = ["pizza", "ramen", "sushi", "kale", "tacos"];
+
+let [firstFood, secondFood, ...restOfFoods] = foods;
+
+console.log(firstFood,secondFood,restOfFoods); // pizza ramen [ 'sushi', 'kale', 'tacos' ]
+
+let { a, c, ...obj } = { a: 1, b: 2, c: 3, d: 4 };
+console.log(a); // => 1
+console.log(c); // => 3
+console.log(obj); // => { b: 2, d: 4 }
+
+```
+
+### Destructring and Function Arguments
+
+```javascript
+let bigCat = {
+  name: "Jet",
+  owner: { name: "Rose" },
+  toys: ["ribbon"],
+  siblings: { name: "Freyja", color: "orange", toys: ["mouse", "string"] }
+};
+
+// Aliased object destructuring
+
+function toyFinder({toys,siblings:{toys:siblingToys}}) {
+  let allToys = toys.concat(siblingToys);
+  console.log(`all toys are: ${allToys}`);
+}
+
+toyFinder(bigCat); // all toys are: ribbon,mouse,string
+
+```
+## Callbacks
+
+A callback is a function that is passed to another function as an argument. A callback can be named function, anonymous function or built in function.
+
+```javascript
+function sayHello(callback) {
+  console.log("Hi");
+  callback();
+  console.log("Hello");
+}
+
+function itsACallBack() {
+  console.log("It's a callback");
+}
+
+sayHello(itsACallBack);
+
+// Output
+
+// Hi
+// It's a callback
+// Hello
+```
+
+```javascript
+// Anonymous Callback
+
+function addAndDouble(num1,num2,cb) {
+  let sum = num1 + num2;
+  let result = cb(sum);
+  console.log(result);
+}
+
+addAndDouble(1,2,function(num) {
+  return num * 2;
+}) // 6
+```
+
+```javascript
+// Build in functions passed as callbacks
+
+function addAndSqroot(num1, num2, cb) {
+  let sum = num1 + num2;
+  let result = cb(sum);
+
+  console.log(result);
+}
+
+addAndSqroot(9,9,Math.sqrt); // 4.242640687119285
+
+```
+## Functions as First Class Objects
+
+First Class Objects in programming are objects that enjoy same privileges as other objects. In JavaScript, numbers, booleans etc are first class objects.
+
+Three Criteria for something to be a first class object:
+
+1) Can be stored in a variable
+2) Can be passed in as argument
+3) Can be returned from a function
+
+In JavaScript, **Functions fulfill the above criteria, hence functions are first class objects in JavaScript.**
+
+**Higher Order Functions** - are functions that operate on other functions, either as passed in arguments or return values.
+
+## Scopes
+
+Scope is an area of where a variable is accessible.
+
+### Global Scope
+
+`window` object in browser and `global` object in node. It is the scope which is available everywhere, i.e, a variable defined here will be available globally.
+
+### Local Scope
+
+Scope inside of a function. A function definition has a scope of its own.
+
+### Block Scope.
+
+Scope inside of a block. A block is the area between `{}`. Examples - `if`,`else`,`while` etc.
+
+## Scope Chaining
+
+JavaScript will keep looking for references in the accessible outer scopes, until it finds a matching reference. This is called ***scope chaining***. Inner scope can access the variables in outer scope, but the other way round is not true. In Short, Scope chaining allows code within in an inner scope to access variables declared in the outer scope.
+
+## Lexical Scope
+
+Lexical Scope is determined at lexing time so we can determine the values of variables without having to run any code. When you run some JavaScript code, it is parsed before it is run. This is called lexing time.
+
+```javascript
+
+function outer() {
+  let x = 5;
+
+  function inner() {
+    // here we know the value of x because scope chaining will
+    // go into the scope above this one looking for variable named x.
+    // We do not need to run this code in order to determine the value of x!
+    console.log(x);
+  }
+  inner();
+}
+
+```
+## Variables
+
+In JavaScript, there are three main ways to decalre a variable.
+
+1) `const` - To declare a constant. A constant cannot be re-assigned, it's value is fixed. Note, that the name binding in immutable, but if a const stores a reference type value (e.g object), it is still mutable. `const` are block scoped.
+
+2) `let` - To declare a re-assignable variable. Variables declared with let are block scoped.
+
+3) `var` - Older syntax to declare a variable. `var` are function scoped.
+
+**Hoisting** - The mechanism of JavaScript that will ***hoist*** the variable declarations to the top of its scope is called hoisting.
+
+## Temporal Dead Zone
+
+Variables declared using `let` and constants declared using `const` are not initialized until their definitions are evaluated. In other words, the time before a `const` or `let` is declared, but not used is called TDZ.
+
+Note - The error thrown by a let variable in the temporal dead zone takes precedence over any scope chaining that would attempt to go to the outer scope to find a value for the variable.
+
+## Function Scope vs Block Scope
+
+```javascript
+function partyMachine() {
+  var string = "party";
+
+  if(true) {
+    var string = "bummer";
+  }
+
+  console.log(`This is a ${string}`); // This is a bummer
+}
+
+// Explanation:
+
+// var is function scoped, so the re-definition sticks and overrides the previous definition. This function-scoped behaviour of var can cause confusing bugs
+
+
+```
+
+```javascript
+function partyMachine() {
+  var string = "party";
+
+  if(true) {
+    let string = "bummer";
+  }
+
+  console.log(`This is a ${string}`); // This is a party
+
+  // Explanation
+
+  // As let is block scoped, it exists isolated inside the block and doesnt overwrite the existing definiton.
+}
+```
+## Global Variables
+
+Defining variables without declaring puts them in global scope. This is bad practice, do not use global variables! Create variables with a defined scope to create self-contained functions. Global Variables === Sloppy Code.
+
+```javascript
+function globalVarsBad() {
+  let x = "not global";
+  y = "super mega global variable bad practice";
+}
+
+console.log(y); // super mega global variable bad practice
+```
+## Arrow Functions
+
+```javascript
+const arrowGreet = (name) => {
+  return `Hello ${name}`;
+}
+
+const arrowGreetConcise = name => `Hello ${name}`;
+
+console.log(arrowGreet("John Doe"));
+console.log(arrowGreetConcise("John Doe Concise"));
+
+// Hello Honey Singh
+// Hello Honey Singh Concise
+```
+
+## Closures
+
+Closure is the combination of a function bundled together with its surrounding state (lexical environment). In other words, closures give you access to an outer function's scope from an inner function.
+
+In simpler words, a closure is when an inner function uses, or changes variables in an outer function
+
+State + some functionality, will get stored in a variable.
+
+```javascript
+function treeMaker() {
+  let trees = [];
+
+  function addTree(tree) {
+    trees.push(tree);
+    return trees;
+  }
+
+  return addTree;
+}
+
+const treeFunc = treeMaker();
+treeFunc('Pine'); // ['Pine']
+```
+Another example for private state creation with closures
+
+```javascript
+function createCounter() {
+  let count = 0;
+
+  return function() {
+    count++;
+    return count;
+  }
+}
+
+let counterOne = createCounter();
+console.log(counterOne()); // 1
+console.log(counterOne()); // 2
+console.log(counterOne()); // 3
+
+let counterTwo = createCounter();
+console.log(counterTwo()); // 1  🤯🤯
+```
+The `count` variables has been **closed-over** or **captured** by the anonymous function.
