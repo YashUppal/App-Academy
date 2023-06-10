@@ -162,9 +162,22 @@ warcry
 ```
 ## Primitive vs Reference Types
 
+
 Primitive Data Types are types which are immutable, that means, on re-assignment, they take up new memory places.
 
 Reference Types are data types which are mutable, i.e they take up the same memory location.
+
+**M**emory == **M**utable
+
+![](https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/pojo/assets/assignment-num1.png)
+
+![](https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/pojo/assets/assignment-num2.png)
+
+![](https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/pojo/assets/assignment-num3.png)
+
+![](https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/pojo/assets/assignment-num5.png)
+
+![](https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/pojo/assets/assignment-num4.png)
 
 ```javascript
 // Primitive
@@ -562,3 +575,44 @@ let counterTwo = createCounter();
 console.log(counterTwo()); // 1  🤯🤯
 ```
 The `count` variables has been **closed-over** or **captured** by the anonymous function.
+
+## Call Stack
+
+In JavaScript, Call stack is a structure that keeps track of functions executions. It is called a stack because functions are either stacked on top or popped out from the top.
+
+## Recursion
+
+Recursion is when a function calls itself. It is used to do something repeatedly.
+
+A recursive function has to have a:
+
+1) Base Case - Situation when the function returns and stack frames have to start popping out.
+
+2) Recursive Case - Situation when the function has to ***recurse***,i.e call itself.
+
+## Default Parameters
+
+Parameters in function definitions which are provided some default values are called default parameters. Argument can be passed that will override the default parameter, if not passed, default value for that parameter will be considered.
+
+Use Cases: To create flags in programs. Also can be used in recursion.
+
+```javascript
+function adder(num,add = 5) {
+  return num + add;
+}
+
+adder(10); // 15
+adder(10,2); // 12
+
+```
+___
+
+## Questions
+
+<li>Create objects using correct syntax with a variety of values.</li>
+<li>Identify that an object is an unordered collection of values.</li>
+<li>Key into an object to receive a single value using both Bracket and Dot
+notation.</li>
+<li>Use Bracket notation to set a variable as a key in an Object.</li>
+<li>Implement a check to see if a key already exists within an Object.</li>
+<li>Understand how object precedence fits in with dot notation for objects.</li>
