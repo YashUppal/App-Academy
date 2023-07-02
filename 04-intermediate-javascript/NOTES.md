@@ -274,6 +274,9 @@ let colors = ["indigo","violet","purple"];
 colorPicker(..colors); // "The colors are indigo, violet and purple"
 
 ```
+
+To summarise, spread will expand and rest will collect.
+
 ## Destructuring
 
 Destructuring let's us simplify our code by de-structuring a data structure like array or object, and assigning values to variables
@@ -327,6 +330,19 @@ console.log(obj); // => { b: 2, d: 4 }
 ```
 
 ### Destructring and Function Arguments
+
+```javascript
+
+  let cat = {name:"Daisy",breed:"Beagle",owner:"John"};
+
+  function dogTag({name,owner}) {
+    console.log(`${owner} is the owner of ${name}`);
+  }
+
+  dogTag(cat);
+
+
+```
 
 ```javascript
 let bigCat = {
@@ -452,7 +468,7 @@ function outer() {
 ```
 ## Variables
 
-In JavaScript, there are three main ways to decalre a variable.
+In JavaScript, there are three main ways to declare a variable.
 
 1) `const` - To declare a constant. A constant cannot be re-assigned, it's value is fixed. Note, that the name binding in immutable, but if a const stores a reference type value (e.g object), it is still mutable. `const` are block scoped.
 
@@ -590,6 +606,9 @@ A recursive function has to have a:
 
 2) Recursive Case - Situation when the function has to ***recurse***,i.e call itself.
 
+<a href="https://www.youtube.com/watch?v=Mv9NEXX1VHc">What on Earth is Recursion? - Computerphile</a>
+
+
 ## Default Parameters
 
 Parameters in function definitions which are provided some default values are called default parameters. Argument can be passed that will override the default parameter, if not passed, default value for that parameter will be considered.
@@ -605,6 +624,153 @@ adder(10); // 15
 adder(10,2); // 12
 
 ```
+
+## IIFE
+
+Immediately Invoked Function Expressions are anonymous functions that are defined and immediately invoked. They can never be called again, the variables defined inside them can never be accessed once the function invokes and completes. Basically, they're like one shot functions that run only once. Ever.
+
+```javascript
+(function() {
+  const name = "John";
+  console.log(name);
+})(); // "John"
+
+// There's no way to call the iife again, or access the const
+console.log(???)
+console.log(name) // ERROR
+```
+
+## Variable Hoisting Recall
+
+Variables declared with `var` are hoisted to the top of their scope.
+
+Variables declared with `let` and `const` are not hoisted because they are stuck in **Temporal Dead Zone**, meaning, they cannot be used until they have been assigned a value.
+
+## Function Hoisting - Function Declaration
+
+Functions defined with Function Declaration syntax are hoisted to the top of the scope.
+
+```javascript
+hello(); // "Hey There!"
+
+function hello() {
+  console.log("Hey There!");
+}
+```
+## Function Hoisting - Function Expression - var
+
+Functions declared with Function Expression syntax with a `var`, get in a conflict. The `var` variable declaration is hoisted to the top of the scope and thus calling it as a function results in a confusion.
+
+```javascript
+
+hello(); // error: hello is not a function
+
+var hello = function() {
+  console.log("Hey There!");
+}
+```
+
+## Function Hoisting - Function Expression - let
+
+Functions declared with Function Expression syntax using `let` are not hoisted, and thus accessing the function results in a ReferenceError.
+
+```javascript
+
+helloAgain(); // ReferenceError, cannot access 'helloAgain' before initialization
+
+let helloAgain = function() {
+  console.log("Hey There Again!"):
+}
+
+```
+
+## Function and Variable Hoisting - const and let
+
+*things* declared with `const` and `let` have their names reserved and cannot be reused.
+
+```javascript
+
+const hello = "This is a variable.";
+
+function hello() {
+  console.log("This is a function");
+}
+
+hello(); // SyntaxError: Identifier 'hello' has already been declared
+
+```
+
+## Function and Variable Hoisting - var declaration and definition
+
+Variable declaration and definition trumps the function declaration
+
+```javascript
+
+var hello = "This is a variable";
+
+function hello() {
+  console.log("This is a function");
+}
+
+console.log(hello); // This is a variable
+
+```
+
+## Function and Variable hoisting - var declaration only
+
+function declaration will trump variable declaration only if its not being defined
+
+```javascript
+var hello;
+
+function hello() {
+  console.log("This is a function");
+}
+
+console.log(hello); //[Function: hello];
+```
+
+## Hoisting Summary and Takeaway
+
+- Important Takeaway 1: Functions declared with Function Expression Syntaxt (`function someFunc() {}`) will be hoisted to the top of the scope.
+
+- Important Takeaway 2: Use `const` and `let` and be careful while using `function someName()` syntax.
+
+- Function Expression Syntax
+  - `var` - `var` variables are hoisted and cause name conflicts (not a function error)
+  - `let` and `const` - not hoisted and the name gets reserved, hence cause ReferenceError
+
+## Default Values of Variables
+
+`let` and `var` variables have a default value of `undefined`. `const` have to have a value while declaring the variable.
+
+## Primitive Data Types
+
+Primitive data types in JavaScript are not objects and thus they do not have methods.
+
+Primitives:
+  1) Number
+  2) String
+  3) Boolean
+  4) Symbol
+  5) Undefined
+  6) Null
+  7) BigInt
+
+Reference:
+  1) Object
+
+In Summary, Primitive data type are data types which are immutable, meaning they cannot be changed, they can only be reassigned from one memory location to another, AND they do not have methods, as only Objects have methods and they are not Objects.
+
+## Why are functions first class objects in JavaScript?
+
+First Class Objects in JavaScript are things which can be:
+
+- Stored in a variable
+- Passed to a function as argument
+- Returned from a function
+
+Since functions can do all of the above, functions are considered first class objects in JavaScript.
 ___
 
 ## Questions
@@ -616,3 +782,13 @@ notation.</li>
 <li>Use Bracket notation to set a variable as a key in an Object.</li>
 <li>Implement a check to see if a key already exists within an Object.</li>
 <li>Understand how object precedence fits in with dot notation for objects.</li>
+<li>How to destructure an array to reference specific elements</li>
+<li>How to destructure an object to reference specific elements</li>
+<li>How to destructure incoming parameters into a function
+<li>Identify the three keywords used to declare a variable in JavaScript</li>
+<li>Explain the differences between const, let and var</li>
+<li>Identify the difference between function and block-scoped variables</li>
+<li>Paraphrase the concept of hoisting in regards to function and block-scoped variables</li>
+<li>define recursion,</li>
+<li>explain its use,</li>
+<li>identify a simple base & recursive case in a problem.</li>
