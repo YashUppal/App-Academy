@@ -478,6 +478,8 @@ In JavaScript, there are three main ways to declare a variable.
 
 **Hoisting** - The mechanism of JavaScript that will ***hoist*** the variable declarations to the top of its scope is called hoisting.
 
+`let` and `const` are also hoisted, but they are hoisted without a default value initialization, hence they throw an error when tried to access before initialization.
+
 ## Temporal Dead Zone
 
 Variables declared using `let` and constants declared using `const` are not initialized until their definitions are evaluated. In other words, the time before a `const` or `let` is declared, but not used is called TDZ.
@@ -646,6 +648,10 @@ Variables declared with `var` are hoisted to the top of their scope.
 
 Variables declared with `let` and `const` are not hoisted because they are stuck in **Temporal Dead Zone**, meaning, they cannot be used until they have been assigned a value.
 
+
+`let` and `const` are also hoisted, but they are hoisted without a default value initialization, hence they throw an error when tried to access before initialization.
+
+
 ## Function Hoisting - Function Declaration
 
 Functions defined with Function Declaration syntax are hoisted to the top of the scope.
@@ -771,6 +777,105 @@ First Class Objects in JavaScript are things which can be:
 - Returned from a function
 
 Since functions can do all of the above, functions are considered first class objects in JavaScript.
+
+## Thread
+
+Thread of Execution is a sequence of command. JavaScript is a single threaded language.
+
+<img src="https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Module-JavaScript/asynchronous-functions/assets/threading.png">
+
+## JavaScript Event Loop
+
+We are familiar with the `call stack`, which keeps track of things that are currently in progress.
+
+There is another part of Event Loop called `message queue` that keeps track of things that cannot be executed right now, but will be executed once the current process completes.
+
+JavaScript follows the principle of `run to completion`, meaning nothing can interrupt a currently in progress process in JavaScript.
+
+`messages` are added to the `message queue` when an event occurs in JavaScript, and they are queued and executed in order.
+
+To process something asynchoronously, and add it to the message queue, call it in a setTimeout.
+
+<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Event_loop">MDN Documentation</a>
+
+## Intro to Asynchronous JS
+
+Asynchronous code is when we can **execute another command while a command already in progress**, and as a consequence, it does not have a guarantee of order of execution. Example, callback code inside a `setTimeout` or `setInterval`
+
+Synchronous code is code that has a guarantee of order of execution.
+
+## Timeouts
+
+`setTimeout` can be used to execute a function callback after a given delay in ms and it can except unlimited number of arguments, and `setInterval` can be used to execute a function callback repeatedly after a given delay in ms, and it also takes an unlimited number of arguments.
+
+
+```javascript
+
+  const foodArg = (...arg) => {
+    console.log(`I want ${arg.join(",")}`);
+  }
+
+  setTimeout(foodArg, 2000, "pancake","fries","coffee");
+  setInterval(foodArg, 2000, "pancake","fries","coffee");
+
+// I want pancake,fries,coffee -> setTimeout
+// I want pancake,fries,coffee
+// I want pancake,fries,coffee
+// I want pancake,fries,coffee
+// I want pancake,fries,coffee
+// I want pancake,fries,coffee
+// I want pancake,fries,coffee
+
+```
+
+## Clearing Timeouts
+
+`clearInterval` and `clearTimeout` can be used to clear timeouts
+
+```javascript
+  const foodArg = (...arg) => {
+    console.log(`I want ${arg.join(",")}`);
+  }
+
+  setTimeout(foodArg, 2000, "pancake","fries","coffee");
+  const interval = setInterval(foodArg, 2000, "pancake","fries","coffee");
+
+  function clear() {
+    clearInterval(interval);
+  }
+
+  setTimeout(clear,20000);
+
+  //will clear the interval after 20000 ms
+
+```
+
+## Timeouts are Asynchronous!
+
+Timeouts are async and non blocking. Look at the example below
+
+
+```javascript
+
+console.log("foo");
+
+setTimeout(()=>console.log("bar"),100);
+
+console.log("baz");
+
+setTimeout(()=>console.log("fizz"),0);
+
+console.log("buzz");
+
+// Output
+  "foo"
+  "baz"
+  "buzz"
+  "fizz"
+  "bar"
+```
+
+**Also, the delay argument in ms passed to a timeout or interval is not an exact time, it is the <i>minimum</i> time in milliseconds after this the callback could be executed!**
 ___
 
 ## Questions
@@ -792,3 +897,8 @@ notation.</li>
 <li>define recursion,</li>
 <li>explain its use,</li>
 <li>identify a simple base & recursive case in a problem.</li>
+<li>explain the difference between single-threaded and multi-threaded execution</li>
+<li>identify JavaScript as a single-threaded language</li>
+<li>explain how the JavaScript runtime uses the call stack and message queue in its event loop</li>
+<li>identify the two operations that characterize a queue data structure</li>
+<li>Describe the difference between synchronous and asynchronous code and Give one example illustrating why we would need to deal with asynchronous code</li>
