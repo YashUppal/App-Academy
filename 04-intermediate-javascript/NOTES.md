@@ -878,6 +878,56 @@ console.log("buzz");
 **Also, the delay argument in ms passed to a timeout or interval is not an exact time, it is the <i>minimum</i> time in milliseconds after this the callback could be executed!**
 ___
 
+## User Input with Readline
+
+'readline' module can be used to read user input asynchonously
+
+```js
+const readline = require('readline');
+
+const rl = readline.createInterface({
+  input: process.stdin,
+  output: process.stdout
+});
+
+rl.question("What's up?", answer1 => {
+  console.log("You responded:" + answer1);
+})
+
+```
+
+## `question` is asynchronous
+As the question method used to get user input is async, it doesn't block the program execution.
+
+```js
+rl.question("What's up?",answer1 => {
+  console.log("Your Answer:"+answer1);
+})
+
+console.log("DONE!");
+
+// OUTPUT:
+"What's up?""DONE!"
+"nothing much" <- Input
+"Your Answer: nothing much" <- Output
+```
+
+## Callback Chaining
+
+```js
+a(function() {
+  b(function() {
+    c(function() {
+      d();
+    });
+  });
+});
+```
+
+## Callback Hell
+
+When callback chaining becomes a problem and too complicated, it's called a Callback Hell.
+
 ## Questions
 
 <li>Create objects using correct syntax with a variety of values.</li>
@@ -902,3 +952,5 @@ notation.</li>
 <li>explain how the JavaScript runtime uses the call stack and message queue in its event loop</li>
 <li>identify the two operations that characterize a queue data structure</li>
 <li>Describe the difference between synchronous and asynchronous code and Give one example illustrating why we would need to deal with asynchronous code</li>
+<li>write a program that accepts user input using Node's readline module</li>
+<li>utilize callback chaining to guarantee relative order of execution among multiple asynchronous functions</li>
