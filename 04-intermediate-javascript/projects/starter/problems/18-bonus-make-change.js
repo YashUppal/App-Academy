@@ -53,15 +53,70 @@ solution so that it only calculates and compares all of the different
 combinations.
 ***********************************************************************/
 
+function biggestCoin(num,coins) {
+
+
+  for(let i = 0; i < coins.length; i++){
+    if(num % coins[i] === 0) {
+      if(coins[i] === 1) {
+
+      } else {
+        return coins[i];
+      }
+
+    }
+  }
+
+  for(let i = 0; i <= coins.length; i++){
+    if(num >= coins[i]) {
+      return coins[i];
+    }
+  }
+
+  return null;
+}
+
 function greedyMakeChange(target, coins = [25, 10, 5, 1]) {
   // no tests for greedyMakeChange so make sure to test this on your own
   // your code here
+
+  let biggestCoin = biggestCoin(target,coins);
+  let change = [];
+
+  target = target - biggestCoin;
+
+  change.push(biggestCoin);
+
+  let result = greedyMakeChange(target,coins).concat(change);
+
+  return result;
+
 }
 
 function makeBetterChange(target, coins = [25, 10, 5, 1]) {
-  // your code here
-}
+  let bigCoin = biggestCoin(target,coins);
+  let change = [];
 
+  if(bigCoin === null) {
+    return null;
+  }
+
+  if(target === 0) {
+    return change;
+  }
+
+  target = target - bigCoin;
+  change.push(bigCoin);
+
+  let result = change.concat(makeBetterChange(target,coins));
+
+  if(result.includes(null)) {
+    return null;
+  } else {
+    return result;
+  }
+
+}
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {

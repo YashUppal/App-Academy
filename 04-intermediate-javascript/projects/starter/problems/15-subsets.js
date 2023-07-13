@@ -1,7 +1,7 @@
 /***********************************************************************
 Write a function called `subsets` that will return all subsets of an array.
 
-Examples: 
+Examples:
 
 subsets([]) // [[]]
 subsets([1]) // [[], [1]]
@@ -16,6 +16,37 @@ Hint: For subsets([1, 2, 3]), there are two kinds of subsets:
 
 // your code here
 
+// Algorithm
+// [1,2,3] -> [[],[1],[2],[1,2],[3],[1,3],[2,3],[1,2,3]]
+//   1, [2,3]  -> 1, [[],[3],[2],[2,3]] -> [[1],[1,3],[1,2],[1,2,3],[],[3],[2],[2,3]]
+//     2,[3]   -> 2, [[],[3]] -> [[],[3],[2],[2,3]]
+
+const combine = (num, arr) => {
+  arr = JSON.parse(JSON.stringify(arr));
+
+  return arr.map((ele) => {
+    return ele.concat([num]);
+  })
+}
+
+const subsets = (arr) => {
+
+  if(arr.length === 1) {
+    return [[],arr];
+  }
+
+  if(arr.length === 0) {
+    return [[]];
+  }
+
+  let first = arr[0];
+  let rest = arr.slice(1);
+
+  let result = subsets(rest);
+
+  return combine(first,result).concat(result);
+
+}
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
   module.exports = subsets;

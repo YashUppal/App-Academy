@@ -63,9 +63,30 @@ The call above should return the tree below:
 
 ***********************************************************************/
 
-const makeTree = (categories, parent) => {
-  // your code here
-};
+const getRoot = (arr,root) => {
+  let parent = arr.filter((obj) => {
+    return obj['parent'] === root;
+  })
+  return parent;
+}
+
+const makeTree = (categories,parent) => {
+
+  let parentNode = getRoot(categories,parent);
+
+  if(parentNode.length === 0){
+    return {};
+  }
+
+  let rootObj = {};
+
+  parentNode.forEach((node) => {
+    rootObj[node.id] = makeTree(categories,node.id);
+  })
+
+  return rootObj;
+
+}
 
 /**************DO NOT MODIFY ANYTHING UNDER THIS LINE*****************/
 try {
