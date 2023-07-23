@@ -186,3 +186,285 @@ A `class` is a blueprint that is used to create an object. A `constructor` insta
 - Object is an instance of a class
 
 - Constructor is a method that creates an instance of a class, i.e, creates an object
+
+## How to define a class
+
+```js
+class Book {
+    constructor(title, series, author) {
+        this.title = title;
+        this.series = series;
+        this.author = author;
+    }
+}
+```
+## How to define instance methods and variables
+
+```js
+class Book {
+    constructor(title, genre, author) {
+        this.title = title; // instance variables
+        this.genre = genre;
+        this.author = author;
+    }
+
+    flipPage() {
+        return `Page flipped of ${this.title}.`;
+    }
+}
+
+// To create an instance
+
+let coolBook = new Book("Metamorphosis","Fiction/Philosophy","Franz Kafka");
+
+console.log(coolBook);
+// Output
+// Book {
+//   title: 'Metamorphosis',
+//   series: 'Fiction/Philosophy',
+//   author: 'Franz Kafka'
+// }
+
+coolBook.flipPage(); // calling an instance method
+// Output
+// Page flipped of Metamorphosis.
+```
+
+## What are instance methods?
+
+Instance methods are the functions, local to an object, that defines the functionality of that object
+
+## How to check if object is instance of a call
+
+Using `instance of`
+
+## Definition of Classes
+
+Classes are templates for creating objects. They encapsulate data with code to work on that data.
+
+
+## what does the `this` keyword do?
+
+`this` keyword maintains the context of our instances (Objects) when calling the instance methods.
+
+## Static Methods
+
+Static Methods are methods that are invoked on the class and not on any instance. They are prefixed with a static keyword
+
+```js
+class Book {
+    constructor(title, author) {
+        this.title = title;
+        this.author = author;
+    }
+
+    getAuthor() {
+        return this.author;
+    }
+
+    static getAuthors(...books) {
+        return books.map(book => book.author);
+    }
+}
+
+let book1 = new Book("Metamorphosis","Kafka");
+let book2 = new Book("Meditations","Aurelius");
+
+let authors = Book.getAuthors(book1, book2);
+console.log(authors); // [ 'Kafka', 'Aurelius' ]
+```
+
+## Examples of uses of static methods
+
+`Math` is a class in JavaScript which only has static methods, called on data to perform mathematical operations.
+
+## Static Variables
+
+Static Variables, just like static methods, are variables (properties) local to a class and are not part of any instance.
+
+They could be useful in caching some information, storing configurations for the class, or just storing things which dont need to be part of instances.
+
+They are declared using `static` keyword
+
+```js
+class Book {
+    constructor(title, author) {
+        this.title = title;
+        this.author = author;
+
+        Book.numBooks += 1;
+    }
+
+    static numBooks = 0;
+
+    getTitle() {
+        return this.title;
+    }
+}
+
+let book1 = new Book("Metamorphosis","Kafka");
+let book2 = new Book("Meditations","Aurelius");
+
+let booksCreatedSoFar = Book.numBooks;
+
+console.log(booksCreatedSoFar); // 2
+```
+
+## Inheritance
+
+To Inherit, is to receive from your ancestor.
+
+Inheritance in programming is the ability of child classess to inherit data and methods from their parent classes.
+
+Example,
+
+`Pen` and `Pencil` classes can inherit things like `bodyColor, shape, size` and methods like `writing()` from a parent class `WritingInstrument`
+
+
+## Inheritance Syntax
+
+```js
+class Animal {
+
+    constructor(name, sound) {
+        this.name = name;
+        this.sound = sound;
+    }
+
+    static pet(animal) {
+        console.log(`You attempted to pet ${animal.name}`);
+    }
+
+    speak() {
+        console.log(this.sound);
+    }
+
+}
+
+class Dog extends Animal {
+    // everything inherited from Animal class
+}
+
+let fluffy = new Dog("fluffy","woof");
+fluffy.speak(); // woof
+Animal.pet(fluffy); // You attempted to pet fluffy
+```
+
+## Object class
+
+When you dont explicitly provide a parent class, classes are inherited from the `Object` class.
+
+```js
+class Animal {}
+
+// same as
+
+class Animal extends Object {
+}
+```
+
+## super keyword
+
+`super` keyword can be used to call the constructor of the parent class inside the child class
+
+```js
+class Animal {
+    constructor(name, sound) {
+        this.name = name;
+        this.sound = sound;
+    }
+
+    static pet(animal) {
+        console.log(`You attempted to pet ${animal.name}`);
+    }
+
+    speak() {
+        console.log(this.sound);
+    }
+}
+
+class Dog extends Animal {
+    constructor(name) {
+        super(name, "woof"); // every dog will have a woof sound
+    }
+}
+
+let fluffy = new Dog("fluffy"); // only have to pass a name
+fluffy.speak(); // woof;
+```
+
+## Interesting Behaviour
+
+```js
+class Fruit {
+  constructor(color, taste) {
+    this.color = color;
+    this.taste = taste;
+  }
+
+  eat() {
+    // name of the constructor function
+    console.log(`You ate a ${this.constructor.name}.`);
+  }
+}
+
+class Apple extends Fruit {
+  constructor() {
+    super('red', 'sweet');
+  }
+}
+
+const orange = new Fruit('orange', 'tangy');
+const apple = new Apple();
+apple.eat(); // You ate a Apple
+```
+
+## Polymorphism
+
+Polymorphism is the ability to take multiple forms.
+
+In OOP, Polymorphism is changing or 'morphing' an existing implementation for each class.
+
+<img src="https://appacademy-open-assets.s3-us-west-1.amazonaws.com/Modular-Curriculum/content/week-04/assets/polymorphism-example.svg">
+
+In Simpler words, `Polymorphism` in Object Oriented Programming is extending the parent's methods in the child class to do something more or different than the parent.
+
+<img src="pointers_1.PNG">
+
+## How to implement polymorphism
+
+One way polymorphism could be implemented is `method overriding`, where a child class overrides the parent's method.
+
+You do that by creating a new method on a class (can be `instance method` or `static method`) with the same name.
+
+```js
+class Business {
+    toString() {
+        console.log("Give us your money");
+    }
+}
+
+class ClothingStore extends Business {
+    toString() {
+        console.log("Buy clothes you don't need");
+    }
+}
+
+let store = new ClothingStore();
+store.toString(); // Buy clothes you don't need
+```
+
+## Using `super` to call a parent's method
+
+`super` can be used inside the child's instance method to call the parent's method with the same name.
+
+## Questions:
+
+- How to define a class using ES6 syntax with a constructor method
+- How to define instance methods and variables
+- How to create an instance using the new keyword
+- What instance methods are
+- How to call instance methods on an instance
+- How to check if an object is an instance of a class using the instanceof operator.
+- How to debug common bugs when using classes in JavaScript
+- `this` keyword?
