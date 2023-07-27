@@ -458,6 +458,140 @@ store.toString(); // Buy clothes you don't need
 
 `super` can be used inside the child's instance method to call the parent's method with the same name.
 
+## `this` keyword
+
+`this` keyword refers to the object that is currently calling a method.
+
+## Method Style invocation
+
+Method style invocation, or dot-notation, is when a method is called on an object like `object.method(args)`. This ensures that the `this` inside the method is set to the object them method is called upon
+
+## Context
+
+**Context** refers to the value of `this` within a function and `this` refers to where the function is invoked
+
+## `strict mode`
+
+`strict mode` is used to protect the global object by accidental mutations by running functions in unintended contexts
+
+## Scope vs Context
+
+Scope refers to the visibility and availability of variables, whereas Context refers to the value of `this` in the code.
+
+## Bind
+
+When `bind` is called, it returns a function that has `this` bound to a provided value, no matter where it is called.
+
+```js
+let boundFunc = func.bind(context);
+```
+
+Magic of `bind` is that you can choose the context for your functions.
+
+```js
+class Cat {
+    constructor(name) {
+        this.name = name
+    }
+
+    purr() {
+        console.log("purr");
+    }
+
+    purrMore() {
+        this.purr();
+    }
+}
+
+let cat = new Cat("Meowser");
+
+const purr = cat.purrMore;
+
+purr(); // purr is not defined
+
+// binding
+
+let boundPurr = purr.bind(cat);
+
+boundPurr(); // "meow"
+```
+
+Another Example
+
+```js
+
+class Cat {
+    constructor(name) {
+        this.name = name;
+    }
+
+    sayName() {
+        console.log(`My name is ${this.name}`);
+    }
+}
+
+class Dog {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+
+let cat = new Cat("meowser"):
+let dog = new Dog("fido");
+
+let sayName = cat.sayName;
+
+sayNameCat = sayName.bind(cat);
+sayNameDog = sayName.bind(dog);
+
+sayNameCat(); // My name is meowser
+sayNameDog(); // My name is fido
+
+```
+to summarise, `bind` function returns a functions with a set `this` keyword.
+
+`call`, `apply` and `bind`, all three serve the same purpose, i.e to call a function with an explicit context.
+
+<a href="https://www.youtube.com/watch?v=YOlr79NaAtQ">FireShip Video</a>
+
+## Exercise
+
+```js
+class Employee {
+    constructor(name, occupation) {
+        this.name = name;
+        this.occupation = occupation;
+    }
+
+    sayName() {
+        console.log(`${this.name} says hello`);
+    }
+
+    sayOccupation() {
+        console.log(`${this.name} is a ${this.occupation}`);
+    }
+}
+
+let jwick = new Employee("John Wick","Dog Lover");
+
+setTimeout(jwick.sayName,2000);
+// undefined says hello
+
+
+setTimeout(jwick.sayOccupation,3000);
+// undefined is a undefined
+
+// the instance methods are being passed to setTimeout as callbacks,
+// so at runtime, the context is changed and thus this is undefined
+
+// fix
+
+setTimeout(jwick.sayName.bind(jwick),2000);
+setTimeout(jwick.sayOccupation.bind(jwick),3000);
+
+```
+
 ## Questions:
 
 - How to define a class using ES6 syntax with a constructor method
