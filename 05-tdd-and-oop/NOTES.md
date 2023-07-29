@@ -630,7 +630,197 @@ setTimeout(jwick.sayOccupation.bind(jwick),3000);
 
 ```
 
+## Arrow Functions Review
 
+```js
+const coolArrowFunction = () => {
+    // expressions
+
+    // return statement
+}
+
+const implicitReturnArrowFunc = someParameter => return <something>
+```
+
+Arrow Functions are anonymous. You cant store them in a variable/constant though.
+
+## Context in Arrow Functions
+
+In Arrow Functions, the value of `this` is based on what code contains it, not what calls it. Thus making them much more usable as callbacks
+
+Meaning, the `this` is lexically bound.
+
+```js
+class Dog {
+    constructor(name) {
+        this.name = name;
+    }
+
+    bark() {
+        console.log(this.name);
+    }
+
+    delayedBark() {
+        setTimeout(this.bark,1000);
+    }
+}
+
+let fido = new Dog("fido");
+fido.bark(); // "fido"
+fido.delayedBark(); // undefined
+
+// fix
+
+class Dog {
+    constructor(name) {
+        this.name = name;
+    }
+
+    bark() {
+        console.log(this.name);
+    }
+
+    delayedBark() {
+        setTimeout(this.bark.bind(this),1000);
+    }
+}
+
+fido.delayedBark(); // fido after 1 second
+
+```
+
+```js
+// Better Solution
+
+class Dog {
+    constructor(name) {
+        this.name = name;
+    }
+
+    bark = () => {
+        console.log(this.name);
+    }
+
+    delayedBark = () => {
+        setTimeout(this.bark,1000);
+    }
+}
+
+let fido = new Dog('fido');
+fido.delayedBark(); // fido after 1 second
+
+```
+
+Arrow functions do not have a `this` of their own, they infer the `this` from surrouding scope. They have a unique ability to retain the context from where they are defined.
+
+## Context in Regular Functions vs Arrow Functions
+
+In Regular Functions, context is bound to the object the functions is called on. the `this` will always be the object that the function/method is called on.
+
+In Arrow Functions, there is no `this` of their own. They derive the `this` from their surrounding scope.
+
+```js
+var variable = “Global Level Variable”;
+
+let myObject = {
+ variable: “Object Level Variable”,
+arrowFunction:() => {
+ console.log(this.variable);
+ },
+
+regularFunction(){
+ console.log(this.variable);
+ }
+
+};
+
+myObject.arrowFunction(); // "Global Level Variable"
+myObject.regularFunction(); // "Object Level Variable"
+```
+
+## What's Prototype
+
+**Everything in JavaScript is an object**
+
+In JavaScript, every object has a hidden property called `[[Prototype]]` which either refers to an object or null.
+
+When we read a property on any object, if it's not found on that object, then JavaScript looks it up on its prototype, and it keeps going up the `Prototype Chain`. This is called `Prototypal Inheritance`
+
+```javascript
+  null
+    ⬆
+[Object Prototype]
+    ⬆
+[Animal]
+    ⬆
+[Rabbit]
+```
+
+`__proto__` is the getter/setter for `[[Prototype]]`
+
+```js
+const animal = {
+
+    eat: function() {
+        console.log(`${this.name} is eating`);
+    },
+
+    sleep: function() {
+        console.log(`${this.name} is sleeping`);
+    }
+}
+
+const rabbit = {
+    name: "Bugs",
+    __proto__:animal
+}
+
+rabbit.eat(); // "Bugs is eating"
+
+```
+
+## 	What is the difference between proto and prototype
+
+`__proto__` is the historical getter/setter for `[[Prototype]]`
+
+## 	How do you create an object with prototype
+
+`Object.create()` method can be used to create an object with explicitly setting a prototype.
+
+```js
+const user = {
+    name: "John",
+    getInfo: function() {
+        console.log(`My name is ${this.name}`);
+    }
+}
+
+const admin = Object.create(user);
+admin.name = "Nate";
+
+console.log(admin.name); // "Nate"
+admin.getInfo(); // My name is Nate
+
+```
+
+## How do you get the prototype of an object
+
+Using `.__proto__` getter/setter or Object.getPrototypeOf() Method.
+
+```js
+let arr = [1,2,3];
+
+console.log(arr.__proto__); // Object(0) []
+console.log(Object.getPrototypeOf(arr)); // Object(0) []
+```
+
+## How do you set prototype of one object to another
+
+Using `Object.setPrototypeOf()` method.
+
+```js
+Object.setPrototypeOf({},null);
+```
 
 ## Questions:
 
@@ -642,3 +832,6 @@ setTimeout(jwick.sayOccupation.bind(jwick),3000);
 - How to check if an object is an instance of a class using the instanceof operator.
 - How to debug common bugs when using classes in JavaScript
 - `this` keyword?
+- What the context of an arrow function is
+- How to define a class method using an arrow function
+- When to use arrow functions to define a class method
