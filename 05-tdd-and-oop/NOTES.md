@@ -555,6 +555,44 @@ to summarise, `bind` function returns a functions with a set `this` keyword.
 
 <a href="https://www.youtube.com/watch?v=YOlr79NaAtQ">FireShip Video</a>
 
+## `apply` and `call`
+
+`apply` and `call` are two more methods that can be used to bind a context to a function. They are different from `bind` as `bind` returns a new function with its `this` set that can be called multiple times, whereas `apply` and `call` invoke the function directly with the passed on context.
+
+`apply` takes an array of arguments and `call` takes comma separated values
+
+```js
+let result = saySomething.apply(context,[...args]);
+let result = saySomething.call(context, ...args);
+```
+
+```js
+class Dog {
+    constructor(name) {
+        this.name = name;
+    }
+}
+
+class Cat {
+    constructor(name) {
+        this.name = name;
+    }
+
+    sayName() {
+        console.log(`${this.name} says meow`);
+    }
+}
+
+let dog = new Dog("fido");
+let cat = new Cat("meowser");
+
+cat.sayName.call(dog); // fido says meow
+cat.sayName.apply(dog);
+```
+
+`call` and `apply` are same except the way they take arguments. apply can take at most two arguments, second one being the array of arguments, whereas call takes comman separated arguments.
+
+
 ## Exercise
 
 ```js
@@ -591,6 +629,8 @@ setTimeout(jwick.sayName.bind(jwick),2000);
 setTimeout(jwick.sayOccupation.bind(jwick),3000);
 
 ```
+
+
 
 ## Questions:
 
