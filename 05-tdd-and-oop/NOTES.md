@@ -822,6 +822,134 @@ Using `Object.setPrototypeOf()` method.
 Object.setPrototypeOf({},null);
 ```
 
+## Errors in JavaScript
+
+## SyntaxError
+
+Syntax error occurs whenever there is an error in the syntax of the code.
+
+```js
+funtion coolFunc() { // SyntaxError
+    // doesnt matter
+}
+```
+
+## ReferenceError
+
+ReferenceError occurs whenever something outside of its scope is referenced or accessed.
+
+```js
+function coolFunc() {
+    let dog = "fido";
+}
+
+console.log(dog); // ReferenceError
+```
+
+## TypeError
+
+TypeError occurs when an operation is performed on the wrong type.
+
+```js
+let dog = "fido";
+dog(); // TypeError
+```
+
+## Creating your own errors
+
+```js
+const error1 = new Error("This is an error");
+const errro2 = Error("This is also an error");
+
+console.log(error1);
+console.log(error2);
+
+// output
+Error: This is an error
+    at Object.<anonymous> (/home/runner/Practice/index.js:1:16)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+Error: This is also an error
+    at Object.<anonymous> (/home/runner/Practice/index.js:2:16)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+```
+## Throwing your own errors
+
+You can 'throw' the custom created errors using the throw keyword
+
+```js
+const customError = Error("This is a cool error");
+throw customError;
+
+//output (in red)
+Error: This is a cool error
+    at Object.<anonymous> (/home/runner/Practice/index.js:1:21)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+```
+## try..catch
+
+We can catch our errors and allow the program to continue executing
+
+```js
+
+function safeDivide(a,b) {
+    if(b === 0) {
+        throw Error("Cannot divide by 0");
+    } else {
+        return a/b;
+    }
+}
+
+try {
+    safeDivide(5,0);
+} catch(err) {
+    console.log(err);
+}
+
+console.log("this will run!");
+
+//output
+Error: Cannot divide by 0
+    at safeDivide (/home/runner/Practice/index.js:4:15)
+    at Object.<anonymous> (/home/runner/Practice/index.js:11:5)
+    at Module._compile (node:internal/modules/cjs/loader:1159:14)
+this will run!
+```
+
+We can check for the type of errors using the `instanceof` method.
+
+```js
+if(err instanceof TypeError) {
+   console.log("TypeError",err);
+}
+```
+`SyntaxErrors` cannot be caught as they happen during compile time and not runtime.
+
+## finally
+
+`finally` block completes the `try..catch` block. Finally block is used to house the code that will always run, no matter error or not.
+
+```js
+const safeDivide = (a,b) => {
+    if(b === 0) {
+        throw Error("divisor cant be zero");
+    } else {
+        return a/b;
+    }
+}
+
+try {
+    safeDivide(1,0);
+} catch(err) {
+    console.log(`${err}`);
+} finally {
+    console.log("finally block always runs");
+}
+```
+
+## Usage Suggestions
+
+`try..catch` block makes your code slower and also cluttered. Write defensive code that checks for bad values and implement good coding practice and bulletproof your code instead.
+
 ## Questions:
 
 - How to define a class using ES6 syntax with a constructor method
