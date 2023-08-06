@@ -28,7 +28,10 @@ describe ('Bejeweled', function () {
       ["🥝", "🍇", "🍊", "🍇" ],
     ];
 
-    let matchIndices = [{row:3, col:3}, {row:2, col:3}, {row:1, col:3},];
+    let matchIndices = [
+      {row: 0, col: 3}, {row: 1, col: 3},{row: 2, col: 3},
+      {row: 1, col: 3}, {row: 2, col: 3},{row: 3, col: 3},
+    ];
 
     expect(Bejeweled.checkForMatches(grid)).to.be.eql(matchIndices);
 

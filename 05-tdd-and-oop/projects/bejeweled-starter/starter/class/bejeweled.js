@@ -7,25 +7,53 @@ class Bejeweled {
 
     this.playerTurn = "O";
 
-    // Initialize this
-    this.grid = [
-      [" ", " ", " ", " ",],
-      [" ", " ", " ", " ",],
-      [" ", " ", " ", " ",],
-      [" ", " ", " ", " ",]
+    this.grid =  [
+      ["🥝", "🍓", "🥥", "🍇",],
+      ["🥥", "🍎", "🍊", "🍇" ],
+      ["🍊", "🥝", "🥝", "🥥" ],
+      ["🥝", "🍎", "🍊", "🍇" ],
     ];
 
     this.cursor = new Cursor(4, 4);
 
     Screen.initialize(4, 4);
     Screen.setGridlines(false);
+    Screen.addCommand("up","move cursor up",this.cursor.up.bind(this.cursor));
+    Screen.addCommand("down","move cursor down",this.cursor.down.bind(this.cursor));
+    Screen.addCommand("left","move cursor left",this.cursor.left.bind(this.cursor));
+    Screen.addCommand("right","move cursor right",this.cursor.right.bind(this.cursor));
+    Screen.addCommand("space","select a jewel",this.cursor.select.bind(this.cursor));
+    Screen.addCommand("x","swap a jewel",Bejeweled.makeMove.bind(this,this.cursor));
 
     this.cursor.setBackgroundColor();
     Screen.render();
+    Bejeweled.fillGrid(this.grid);
   }
 
-  static checkForMatches(grid) {
+  static fillGrid(grid) {
+    for(let i = 0; i < grid.length; i++){
+      for(let j = 0; j < grid.length; j++){
+        Screen.setGrid(i,j,`${grid[i][j]}`)
+      }
+    }
+    Screen.render();
+  }
 
+  static makeMove(cursor) {
+
+    cursor.swap.apply(cursor);
+    Bejeweled.checkForMatches(Screen.grid);
+    Bejeweled.piecesFall(Screen.grid);
+    Bejeweled.fillEmptyGaps(Screen.grid);
+    cursor.setBackgroundColor.apply(cursor);
+    Screen.render();
+  }
+
+
+  static checkForMatches(grid) {
+    Screen.render();
+    var waitTill = new Date(new Date().getTime() + 1 * 1000);
+    while(waitTill > new Date()){}
     // check for horizontal win
     let matches = [];
     for(let i = 0; i < grid.length; i++){
@@ -50,6 +78,21 @@ class Bejeweled {
       }
     }
 
+    matches.forEach((obj) => {
+      Screen.setBackgroundColor(obj.row,obj.col,"red");
+    })
+    Screen.render();
+
+    var waitTill = new Date(new Date().getTime() + 1 * 1000);
+    while(waitTill > new Date()){}
+
+    matches.forEach((obj) => {
+      Screen.setGrid(obj.row, obj.col, " ");
+      Screen.setBackgroundColor(obj.row,obj.col,"black");
+    })
+
+    Screen.render();
+
     return matches;
   }
 
@@ -62,8 +105,13 @@ class Bejeweled {
         let jewel = grid[j][i];
         col.push(jewel);
       }
-      if(col.includes(" ")) {
-        col = col.filter(ele => ele != " ");
+
+      col = col.filter((ele) => {
+        if(ele != " ") {
+          return ele;
+        }
+      })
+      while(col.length < 4) {
         col.unshift(" ");
       }
 
@@ -72,11 +120,33 @@ class Bejeweled {
       }
     }
 
-    // return grid;
 
+
+    // return grid;
+    Screen.render();
   }
 
+  static fillEmptyGaps(grid) {
+    const randomFruits = ["🥝", "🍓", "🥥", "🍇","🍊","🍎"];
 
+    for(let i = 0; i < grid.length; i++){
+      for(let j = 0; j < grid[i].length; j++) {
+        if(Screen.grid[i][j] == " ") {
+          let randomFruit = randomFruits[Math.floor(Math.random() * randomFruits.length)];
+          Screen.setGrid(i,j,randomFruit);
+        }
+      }
+    }
+    Screen.render();
+
+    let matches = Bejeweled.checkForMatches(Screen.grid);
+    if(matches.length) {
+      Screen.render();
+      Bejeweled.checkForMatches(Screen.grid);
+    } else {
+      return
+    }
+  }
 }
 
 module.exports = Bejeweled;
