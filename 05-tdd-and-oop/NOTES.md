@@ -950,6 +950,141 @@ try {
 
 `try..catch` block makes your code slower and also cluttered. Write defensive code that checks for bad values and implement good coding practice and bulletproof your code instead.
 
+## Testing - The Public Interfaces
+
+You should test the functionality of your applications, how it is goint to be used (use-case testing).
+
+## Testing Pyramid
+
+
+<img src="https://2.bp.blogspot.com/-YTzv_O4TnkA/VTgexlumP1I/AAAAAAAAAJ8/57-rnwyvP6g/s1600/image02.png">
+
+- Unit Testing - Testing a single unit of your application in isolation.
+- Integration Testing - How two or more units of your code interact and work together when integrated.
+- E2E - Testing the entire application end to end.
+
+## TDD
+
+TDD stands for Test Driven Development, and it is the process of writing tests before writing functionality. It follows three steps of Red, Greed, Refactor.
+
+- Red - Write the specs and watch them fail. Failing tests also confirm false positives
+- Green - Write code to pass the specs
+- Refactor - Improve for readability, maintainability and performance.
+
+
+## Mocha and Chai
+
+- Mocha is the testing framework
+- Chai is the assertion library that performs the actual test
+
+## Custom Error Types
+
+You can create custom errors by extending the existing `Error` class
+
+```js
+class MissingFieldError extends Error {
+    constructor(field, ...params) {
+        super(...params);
+
+    if(Error.captureStackTrace){
+        Error.captureStackTrace(this,MissingFieldError);
+    }
+
+    this.field = field;
+    this.message = `Missing field ${this.field}`;
+    }
+}
+
+try {
+    throw new MissingFieldError
+} catch(err) {
+    console.log(err.field);
+    console.log(err.message);
+}
+```
+
+## ES5 Class Syntax
+
+## Creating objects with constructor functions
+
+```js
+function Book(title,author,series) {
+    this.title = title;
+    this.author = author;
+    this.series = series;
+}
+
+const metamorphosis = new Book("Metamorphosis","Franz Kafka","Philosophy Classics");
+
+console.log(metamorphosis);
+
+// output
+// Book {
+//   title: 'Metamorphosis',
+//   author: 'Franz Kafka',
+//   series: 'Philosophy Classics'
+// }
+```
+A constructor function works exactly the same way as an ES6 Class Syntax constructor works
+
+few things to keep in mind:
+- The name of the constructor function is capitalized, for easier recognition and conventions
+- The constructor functions doesn't explicitly return anything. Using the `new` keyword it implicitly returns the new instance
+- `this` refers to the newly created instance.
+
+## Static methods and Variables
+
+Static methods and variables can be added directly to the class constructor.
+
+```js
+function Dog(name,sound) {
+    this.name = name;
+    this.sound = sound;
+}
+
+Dog.greet = function(dog) {
+    console.log(`${dog.name} says ${dog.sound}`);
+}
+
+Dog.animalType = "DOG";
+
+let fido = new Dog("fido","bhowow");
+Dog.greet(fido); // fido says bhowow
+console.log(Dog.animalType); // DOG
+```
+## Instance Methods
+
+Instance methods can be added to an object by adding that method to the prototype of the class.
+
+Prototype is the mechanism by which classes inherit from each other in JS.
+
+```js
+function Dog(name) {
+    this.name = name;
+}
+
+Dog.prototype.sayName = function() {
+    console.log(`My name is ${this.name}`);
+}
+
+let fido = new Dog("fido");
+fido.sayName(); // My name is fido
+```
+
+## Monkey Patching
+
+Monkey Patching is changing the behavious of a class after it has been defined.
+
+```js
+
+String.prototype.helloWorld = function() {
+    console.log("Hello World!");
+}
+
+let str = "random string";
+str.helloWorld(); // Hello World!
+```
+
 ## Questions:
 
 - How to define a class using ES6 syntax with a constructor method
