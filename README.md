@@ -6,7 +6,7 @@
 - [x] JavaScript Fundamentals
 - [x] Practice Week
 - [x] Intermediate JavaScript
-- [ ] TDD and OOP
+- [x] TDD and OOP
 - [ ] Data Structures and Algorithms
 - [ ] HTML and CSS
 - [ ] Practice Week
