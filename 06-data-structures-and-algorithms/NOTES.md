@@ -115,3 +115,179 @@ Queue is a data structure that follows the `First In, First Out` approach. E.g a
 
 Stack and Queue can be implemented using linked lists and arrays.
 for smaller `n`, we can use arrays. For large number of `n`, we can use the linked list implementation.
+
+## Improving Time Complexity - Caching, Memoization and Tabulation
+
+
+## Caching
+
+Caching is the process of storing results of effort somewhere, and reusing those results instead of spending that effort again. Effort could be spent in making complex calculations, fetching large assets, making service requests and so on.
+
+## Caching - Memoization
+
+The process of keeping a `memo` of calculations is a form of caching, where the results are stored and a memo of the running log is kept.
+
+## Caching - Tabulation
+
+This is how you build the cache from the ground up. Creating a table of values to refer. Example would be to create a cache for fibonacci values
+
+```js
+let cache = {};
+
+function fibTabulation(n) {
+  cache[1] = 0;
+  cache[2] = 1;
+
+  for(let i = 3; i <= n; i++){
+     cache[i] = cache[i-1] + cache[i-2];
+  }
+}
+
+fibTabulation(100);
+
+console.log(cache["100"],cache["10"],cache["50"]); // 218922995834555200000 34 7778742049
+```
+
+## Performance Gains
+
+Comparison between a function that recursively calculates fibonacci number at n position with caching and without.
+
+```js
+let cache = {};
+
+function fibonacci(a) {
+  // console.log(cache);
+  if(cache[a]) return cache[a];
+  if(a === 1) return 1;
+  if(a === 2) return 1;
+
+  cache[a] = fibonacci(a-2) + fibonacci(a-1);
+  return cache[a];
+}
+
+function fibonacciSlow(a) {
+  if (a === 1) return 1;
+  if (a === 2) return 1;
+
+  return fibonacciSlow(a-1) + fibonacciSlow(a-2);
+}
+
+let start = Date.now();
+
+let fib = fibonacci(42);
+
+let end = Date.now();
+
+console.log("Cached Version:",end - start,"ms");
+console.log(fib);
+
+start = Date.now();
+
+let fibslow = fibonacciSlow(42);
+
+end = Date.now();
+
+console.log("Uncached Version:", end - start,"ms");
+console.log(fibslow);
+
+Cached Version: 0 ms ✔
+267914296
+Uncached Version: 11788 ms ❌
+267914296
+
+```
+
+Uncached version takes 11788 ms where as cached one takes 0 ms !!!! 🤯
+
+## Memoization, Tabulation and Dynamic Programming
+
+All fall under the umbrella of caching. Utilise it for massive performance gains!
+
+
+## Memoization of factorial
+
+Converts algorithm's time complexity from 2^n to n
+
+```js
+function fastFib(n,memo={}) {
+
+  if(n in memo) return memo[n];
+
+  if(n === 1) return 1;
+  if(n === 2) return 1;
+
+  memo[n] = fastFib(n-1,memo) + fastFib(n-2,memo);
+
+  return memo[n];
+}
+
+console.log(fastFib(50)); // returns almost instantly
+```
+## How to memoize?
+
+Think of ways to store results of repetetive expensive computations and essentially, trade some memory for performance.
+
+## The Memoization Formula
+
+The memoization formula
+Now that you understand memoization, when should you apply it? Memoization is useful when attacking recursive problems that have many overlapping sub-problems. You'll find it most useful to draw out the visual tree first. If you notice duplicate sub-trees, time to memoize. Here are the hard and fast rules you can use to memoize a slow function:
+
+1. Write the unoptimized, brute force recursion and make sure it works.
+2. Add the memo object as an additional argument to the function. The keys will represent unique arguments to the function, and their values will represent the results for those arguments.
+3. Add a base case condition to the function that returns the stored value if the function's argument is in the memo.
+4. Before you return the result of the recursive case, store it in the memo as a value and make the function's argument its key.
+
+## Tabulation
+
+Tabulation is the process of creating a table of results for reusing. The data structure used is mostly an array.
+
+## Tabulation of Fibonacci
+
+```js
+function tabulatedFib(n) {
+  let table = new Array(n);
+
+  table[0] = 1;
+  table[1] = 1;
+
+  for(let i = 2; i < n; i++) {
+    table[i] = table[i-1] + table[i-2];
+  }
+
+  // table : //[ 1,  1,  2,  3,  5, 8, 13, 21, 34, 55 ]
+
+  return table[n];
+}
+```
+
+The space taken is O(n) as the size of the array is 'n' and the runtime is also O(n) because the only major operation is the loop. We can also refactor this to use O(1) space, as at a given time only the last two entries are needed.
+
+## Refactoring for O(1) Space
+
+```js
+function tabulatedFib(n) {
+  let table = [1,1];
+
+  if(n === 1) return 1;
+
+  for(let i = 0; i < n-2; i++) {
+    let [secondLast, last] = table;
+    table = [last, secondLast + last];
+  }
+
+  console.log(table);// [ 34, 55 ]
+
+  return table[1];
+}
+
+console.log(tabulatedFib(10)); // 55
+```
+
+## The Tabulation Formula
+
+Here are the general guidelines for implementing the tabulation strategy. This is just a general recipe, so adjust for taste depending on your problem:
+
+1. Create the table array based off of the size of the input, which isn't always straightforward if you have multiple input values
+2. Initialize some values in the table that "answer" the trivially small subproblem usually by initializing the first entry (or entries) of the table
+3. Iterate through the array and fill in remaining entries, using previous entries in the table to perform the current calculation
+4. Your final answer is (usually) the last entry in the table
