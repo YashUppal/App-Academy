@@ -149,6 +149,8 @@ function abbreviate(sentence) {
 
 }
 
+// Time Complexity - O(n)
+// Space Complexity - O(n)
 function _abbreviater(word) {
     const VOWELS = "aeiou";
     let abbreviated = "";
