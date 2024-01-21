@@ -364,3 +364,32 @@ Set is an abstract data structure, that is just like an array, but has three dif
 - Only stores unique data
 - Data is stored unordered
 - Constant lookup time
+
+## Sorting
+
+### Bubble Sort
+
+```javascript
+// iterate through the array
+// swap if out of order
+// if no swap occured, array is sorted, return
+// else start again
+
+function bubbleSort(arr) {
+  while(true) {
+    let swapped = false;
+
+    for(let i = 0; i < arr.length-1; i++){
+      if(arr[i] > arr[i+1]) {
+        swapped = true;
+        [ arr[i], arr[i+1] ] = [ arr[i+1], arr[i]];
+      }
+    }
+
+    if(!swapped) {
+      break;
+    }
+  }
+  return arr;
+}
+```
